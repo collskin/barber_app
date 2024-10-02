@@ -1,5 +1,5 @@
-// pages/api/barbers/[barberId]/availability.ts
-import type { NextApiRequest, NextApiResponse } from "next";
+// app/api/barbers/[barberId]/availability/route.ts
+import { NextRequest, NextResponse } from "next/server";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
@@ -18,38 +18,26 @@ import BarberModel from "@/app/models/Barber";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-interface AvailableSlotsResponse {
-  availableSlots: string[]; // ISO strings
-}
+export async function GET(request: NextRequest, { params }: { params: { barberId: string } }) {
+  const barberId = params.barberId;
+  const url = new URL(request.url);
+  const date = url.searchParams.get("date");
+  const time = url.searchParams.get("time");
 
-interface AvailabilityMessageResponse {
-  message: string;
-  available?: boolean;
-}
+  console.log('API GET Handler Invoked');
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<AvailableSlotsResponse | AvailabilityMessageResponse>
-) {
-  const { method } = req;
-  const { barberId } = req.query;
-
-  if (method !== "GET") {
-    return res.status(405).json({ message: `Method ${method} not allowed` });
-  }
-
-  const { date, time } = req.query; // date: 'YYYY-MM-DD', time: 'HH:MM' (optional)
-
-  if (!date || typeof date !== "string") {
-    return res.status(400).json({
-      message: "Date query parameter is required in YYYY-MM-DD format.",
-    });
+  if (!date) {
+    return NextResponse.json(
+      { message: "Date query parameter is required in YYYY-MM-DD format." },
+      { status: 400 }
+    );
   }
 
   if (time && typeof time !== "string") {
-    return res.status(400).json({
-      message: "Time query parameter must be a string in HH:MM format.",
-    });
+    return NextResponse.json(
+      { message: "Time query parameter must be a string in HH:MM format." },
+      { status: 400 }
+    );
   }
 
   try {
@@ -58,14 +46,14 @@ export default async function handler(
     // Verify barber exists
     const barber = await BarberModel.findById(barberId);
     if (!barber) {
-      return res.status(404).json({ message: "Barber not found." });
+      return NextResponse.json({ message: "Barber not found." }, { status: 404 });
     }
 
     // Define the date in UTC or your preferred timezone
     const selectedDate = dayjs.utc(date, "YYYY-MM-DD").startOf("day");
 
     if (!selectedDate.isValid()) {
-      return res.status(400).json({ message: "Invalid date format." });
+      return NextResponse.json({ message: "Invalid date format." }, { status: 400 });
     }
 
     // If a specific time is provided, check availability at that time
@@ -82,9 +70,10 @@ export default async function handler(
         minute < 0 ||
         minute > 59
       ) {
-        return res
-          .status(400)
-          .json({ message: "Invalid time format. Use HH:MM." });
+        return NextResponse.json(
+          { message: "Invalid time format. Use HH:MM." },
+          { status: 400 }
+        );
       }
 
       const requestedTime = selectedDate
@@ -103,10 +92,13 @@ export default async function handler(
         !BREAK_TIMES.includes(requestedTime.format("HH:mm"));
 
       if (!isWithinWorkingHours) {
-        return res.status(400).json({
-          message:
-            "Requested time is outside of working hours or during break.",
-        });
+        return NextResponse.json(
+          {
+            message:
+              "Requested time is outside of working hours or during break.",
+          },
+          { status: 400 }
+        );
       }
 
       // Check if the slot is already booked
@@ -115,10 +107,13 @@ export default async function handler(
         appointmentTime: requestedTime.toDate(),
       });
 
-      return res.status(200).json({
-        message: "Availability checked.",
-        available: !appointmentExists,
-      });
+      return NextResponse.json(
+        {
+          message: "Availability checked.",
+          available: !appointmentExists,
+        },
+        { status: 200 }
+      );
     }
 
     // Generate all possible appointment slots for the day
@@ -162,9 +157,12 @@ export default async function handler(
       .filter((slot) => !bookedTimes.includes(slot.getTime()))
       .map((slot) => slot.toISOString());
 
-    res.status(200).json({ availableSlots });
+    return NextResponse.json({ availableSlots }, { status: 200 });
   } catch (error) {
     console.error("Error fetching availability:", error);
-    res.status(500).json({ message: "Internal server error." });
+    return NextResponse.json(
+      { message: "Internal server error ali radi." },
+      { status: 500 }
+    );
   }
 }

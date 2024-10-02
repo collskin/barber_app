@@ -1,5 +1,5 @@
-// pages/api/barbers/[barberId]/appointments.ts
-import type { NextApiRequest, NextApiResponse } from "next";
+// app/api/barbers/[barberId]/appointments/route.ts
+import { NextRequest, NextResponse } from "next/server";
 import dayjs from "dayjs";
 import { dbConnect } from "@/app/lib/db";
 import BarberModel from "@/app/models/Barber";
@@ -19,41 +19,21 @@ interface BookingRequestBody {
   clientEmail: string;
 }
 
-interface BookingSuccessResponse {
-  message: string;
-  appointment: {
-    _id: string;
-    barber: string;
-    clientName: string;
-    clientEmail: string;
-    appointmentTime: string; // ISO string
-    createdAt: string;
-    updatedAt: string;
-  };
-}
-
-interface BookingErrorResponse {
-  message: string;
-}
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<BookingSuccessResponse | BookingErrorResponse>
+export async function POST(
+  request: NextRequest,
+  { params }: { params: { barberId: string } }
 ) {
-  const { method } = req;
-  const { barberId } = req.query;
+  const { barberId } = params;
 
-  if (method !== "POST") {
-    return res.status(405).json({ message: `Method ${method} not allowed` });
-  }
+  const body: BookingRequestBody = await request.json();
 
-  const { date, time, clientName, clientEmail } =
-    req.body as BookingRequestBody;
+  const { date, time, clientName, clientEmail } = body;
 
   if (!date || !time || !clientName || !clientEmail) {
-    return res.status(400).json({
-      message: "Date, time, clientName, and clientEmail are required.",
-    });
+    return NextResponse.json(
+      { message: "Date, time, clientName, and clientEmail are required." },
+      { status: 400 }
+    );
   }
 
   try {
@@ -62,15 +42,16 @@ export default async function handler(
     // Verify barber exists
     const barber = await BarberModel.findById(barberId);
     if (!barber) {
-      return res.status(404).json({ message: "Barber not found." });
+      return NextResponse.json({ message: "Barber not found." }, { status: 404 });
     }
 
     // Parse and validate date and time
     const selectedDate = dayjs.utc(date, "YYYY-MM-DD");
     if (!selectedDate.isValid()) {
-      return res
-        .status(400)
-        .json({ message: "Invalid date format. Use YYYY-MM-DD." });
+      return NextResponse.json(
+        { message: "Invalid date format. Use YYYY-MM-DD." },
+        { status: 400 }
+      );
     }
 
     const [hourStr, minuteStr] = time.split(":");
@@ -85,9 +66,10 @@ export default async function handler(
       minute < 0 ||
       minute > 59
     ) {
-      return res
-        .status(400)
-        .json({ message: "Invalid time format. Use HH:MM." });
+      return NextResponse.json(
+        { message: "Invalid time format. Use HH:MM." },
+        { status: 400 }
+      );
     }
 
     const appointmentTime = selectedDate
@@ -106,16 +88,18 @@ export default async function handler(
       !BREAK_TIMES.includes(appointmentTime.format("HH:mm"));
 
     if (!isWithinWorkingHours) {
-      return res.status(400).json({
-        message: "Requested time is outside of working hours or during break.",
-      });
+      return NextResponse.json(
+        { message: "Requested time is outside of working hours or during break." },
+        { status: 400 }
+      );
     }
 
     // Validate 30-minute interval
     if (minute !== 0 && minute !== 30) {
-      return res.status(400).json({
-        message: "Appointments can only be scheduled on the hour or half-hour.",
-      });
+      return NextResponse.json(
+        { message: "Appointments can only be scheduled on the hour or half-hour." },
+        { status: 400 }
+      );
     }
 
     // Check if the slot is already booked
@@ -125,9 +109,10 @@ export default async function handler(
     });
 
     if (existingAppointment) {
-      return res
-        .status(409)
-        .json({ message: "This time slot is already booked." });
+      return NextResponse.json(
+        { message: "This time slot is already booked." },
+        { status: 409 }
+      );
     }
 
     // Create the appointment
@@ -138,26 +123,33 @@ export default async function handler(
       appointmentTime: appointmentTime.toDate(),
     });
 
-    res.status(201).json({
-      message: "Appointment booked successfully.",
-      appointment: {
-        _id: appointment._id,
-        barber: appointment.barber.toString(),
-        clientName: appointment.clientName,
-        clientEmail: appointment.clientEmail,
-        appointmentTime: appointment.appointmentTime.toISOString(),
-        createdAt: appointment.createdAt.toISOString(),
-        updatedAt: appointment.updatedAt.toISOString(),
+    return NextResponse.json(
+      {
+        message: "Appointment booked successfully.",
+        appointment: {
+          _id: appointment._id,
+          barber: appointment.barber.toString(),
+          clientName: appointment.clientName,
+          clientEmail: appointment.clientEmail,
+          appointmentTime: appointment.appointmentTime.toISOString(),
+          createdAt: appointment.createdAt.toISOString(),
+          updatedAt: appointment.updatedAt.toISOString(),
+        },
       },
-    });
-  } catch (error) {
+      { status: 201 }
+    );
+  } catch (error: any) {
     console.error("Error booking appointment:", error);
     // Handle duplicate key error (in case of race conditions)
     if (error.code === 11000) {
-      return res
-        .status(409)
-        .json({ message: "This time slot is already booked." });
+      return NextResponse.json(
+        { message: "This time slot is already booked." },
+        { status: 409 }
+      );
     }
-    res.status(500).json({ message: "Internal server error." });
+    return NextResponse.json(
+      { message: "Internal server error ju ju." },
+      { status: 500 }
+    );
   }
 }
