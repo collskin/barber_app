@@ -28,16 +28,16 @@ const Header = () => {
       <div className="w-8/12 ml-7">
         <p className="py-2 font-medium">Sasa barber</p>
       </div>
-      <div className="justify-center items-center flex">
-        <p className="mx-4 py-2 cursor-pointer font-medium">About</p>
-        <p className="mx-4 py-2 cursor-pointer font-medium">Services</p>
-        <p className="mx-4 py-2 cursor-pointer font-medium">Contact</p>
-        <p
+      <div className="justify-center items-center flex nav "  >
+        <a href="#about" ><p className="mx-4 py-2 cursor-pointer font-medium">About</p></a>
+        <a href="#services"><p className="mx-4 py-2 cursor-pointer font-medium">Services</p></a>
+        <a href="#contact"><p className="mx-4 py-2 cursor-pointer font-medium">Contact</p></a>
+        {/* <p
           className="mx-4 py-2 cursor-pointer font-medium"
           onClick={handleOpenModal}
         >
           Sign in
-        </p>
+        </p> */}
       </div>
       {isOpen && (
         <div
@@ -53,21 +53,19 @@ const Header = () => {
             </button>
             <div className="flex justify-between mb-6">
               <h2
-                className={`text-2xl font-semibold cursor-pointer transition-colors duration-300 ${
-                  isLoginTabVisible
-                    ? "text-white border-b-2 border-primary-border"
-                    : "text-secondary-grey-bg"
-                }`}
+                className={`text-2xl font-semibold cursor-pointer transition-colors duration-300 ${isLoginTabVisible
+                  ? "text-white border-b-2 border-primary-border"
+                  : "text-secondary-grey-bg"
+                  }`}
                 onClick={handleTabClick}
               >
                 Login
               </h2>
               <h2
-                className={`text-2xl font-semibold cursor-pointer transition-colors duration-300 ${
-                  !isLoginTabVisible
-                    ? "text-white border-b-2 border-primary-border"
-                    : "text-secondary-grey-bg"
-                }`}
+                className={`text-2xl font-semibold cursor-pointer transition-colors duration-300 ${!isLoginTabVisible
+                  ? "text-white border-b-2 border-primary-border"
+                  : "text-secondary-grey-bg"
+                  }`}
                 onClick={handleTabClick}
               >
                 SignUp

@@ -4,12 +4,17 @@ import React from "react";
 
 interface TimeCardProps {
   time: string;
+  onClick: any
+  active: boolean
+  taken: boolean
 }
 
-const TimeCard: React.FC<TimeCardProps> = ({ time }) => {
+const TimeCard: React.FC<TimeCardProps> = ({ time, onClick, active, taken }) => {
   return (
     <div
-      className="w-16 h-6 flex justify-center items-center bg-white
+      onClick={onClick}
+      style={active ? { background: 'yellow' } : taken ? { opacity: .4, cursor: 'not-allowed' } : {}}
+      className="w-16 h-6 flex justify-center items-center cursor-pointer bg-white
      hover:bg-yellow-300 transition-colors duration-300 m-1 rounded-md"
     >
       <p

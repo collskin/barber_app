@@ -4,7 +4,7 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { motion, useAnimation } from "framer-motion";
-import PinIcon from "../assets/pin.png";
+import './css/contact.css'
 
 const Contact = () => {
   const icon = L.icon({
@@ -30,13 +30,13 @@ const Contact = () => {
       animate={controls}
       transition={{ type: "spring", duration: 1 }}
     >
-      <div className="bg-black w-full min-h-screen">
+      <div className="contact-container" id="contact" >
         <h2 className=" text-9xl font-semibold mb-4 text-center pt-32">
           CONTACT
         </h2>
         <div className=" mt-16 flex bg-secondary-bg justify-center items-center min-w-full">
-          <div className="flex justify-center  min-w-full">
-            <div className="w-1/2 justify-end items-center flex bg-black pr-20 pl-22">
+          <div className="contact-flex">
+            <div className="contact-map">
               <MapContainer
                 style={{
                   width: "600px",
@@ -54,7 +54,7 @@ const Contact = () => {
               </MapContainer>
             </div>
             {/* Address */}
-            <div className="w-1/2 bg-black pl-16">
+            <div className="contact-info">
               <div className="w-1/2 bg-black">
                 <h2 className="text-4xl font-semibold mb-4">Address</h2>
                 <p>Cara Lazara 182</p>

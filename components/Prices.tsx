@@ -1,9 +1,8 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import Img_one from "../assets/image_one.jpg";
-import IMG_two from "../assets/image_two.jpg";
-import Image from "next/image";
+import './css/prices.css'
 import { motion, useAnimation } from "framer-motion";
+
 
 const Prices = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -26,10 +25,10 @@ const Prices = () => {
       animate={controls}
       transition={{ type: "spring", duration: 1 }}
     >
-      <div className=" min-h-screen flex bg-primary-bg ">
-        <div className="min-w-full flex justify-center items-center min-h-full px-20">
-          <div className="w-1/2">
-            <h2 className="text-7xl  mb-4">Prices:</h2>
+      <div className="prices-container" id="services" >
+        <div className=" prices-wrapper min-w-full flex justify-center items-center min-h-full px-20">
+          <div className="prices-limiter w-1/2">
+            <h2 className="text-7xl  mb-4 prices-title">Prices:</h2>
             <div className="flex flex-col min-w-full">
               <div className="min-w-full">
                 <div className="flex items-center mb-4">

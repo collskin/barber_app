@@ -1,43 +1,44 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
-
-const servicesList = [
-  { name: "Haircut", price: "800 RSD" },
-  { name: "Haircut + Beard Trim", price: "1200 RSD" },
-  { name: "Beard Trim", price: "800 RSD" },
-  { name: "Haircut + Washing Hair", price: "1000 RSD" },
-];
+import { objectToQueryParams, servicesList } from "../data";
+import { Input } from "@/components/Input";
+import './style.css'
 
 const ServicesPage = () => {
-  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const searchParams = useSearchParams();
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [selectedServices, setSelectedServices] = useState<number[]>([]);
   const router = useRouter();
 
-  const handleCheckboxChange = (serviceName: string) => {
+  const handleCheckboxChange = (serviceId: number) => {
     setSelectedServices((prevSelected) =>
-      prevSelected.includes(serviceName)
-        ? prevSelected.filter((name) => name !== serviceName)
-        : [...prevSelected, serviceName]
+      prevSelected.includes(serviceId)
+        ? prevSelected.filter((id) => id !== serviceId)
+        : [...prevSelected, serviceId]
     );
   };
 
   const handleConfirmServices = () => {
-    router.push("/select-date");
+    router.push("/select-date" + objectToQueryParams({ barber: searchParams.get('barber'), ids: selectedServices, name, phone }));
   };
 
   return (
-    <div className="min-w-full min-h-screen bg-black p-8 flex justify-center items-center flex-col">
-      <h1 className="text-3xl font-bold mb-6">Select Services</h1>
+    <div className="min-w-full min-h-screen bg-black p-8 flex justify-center items-center flex-col services-container">
+      <h1 className="text-3xl font-bold mb-6 services-title "  >Ostavite podatke i odaberite usluge</h1>
       <form>
+        <Input placeholder="Unesite vase ime" value={name} type="text" label="Ime" onChange={(e: any) => setName(e.target.value)} />
+        <Input placeholder="Unesite vas kontakt telefon" value={phone} type="tel" label="Telefon" onChange={(e: any) => setPhone(e.target.value)} />
         {servicesList.map((service) => (
           <div key={service.name} className="flex items-center mb-4">
             <input
               type="checkbox"
               id={service.name}
               name={service.name}
-              checked={selectedServices.includes(service.name)}
-              onChange={() => handleCheckboxChange(service.name)}
+              checked={selectedServices.includes(service.id)}
+              onChange={() => handleCheckboxChange(service.id)}
               className="mr-4"
             />
             <label htmlFor={service.name} className="flex-1 text-lg">
@@ -50,7 +51,7 @@ const ServicesPage = () => {
         className="min-w-56 min-h-10 bg-secondary-grey-bg rounded-md mt-4"
         onClick={handleConfirmServices}
       >
-        Confirm
+        Dalje
       </button>
     </div>
   );

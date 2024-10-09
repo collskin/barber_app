@@ -5,6 +5,7 @@ import Image from "next/image";
 import logo from "../public/sale-logo.svg";
 import { motion, useAnimation } from "framer-motion";
 import { useRouter } from "next/navigation";
+import './css/about.css'
 
 export const About = () => {
   const router = useRouter();
@@ -26,16 +27,16 @@ export const About = () => {
       animate={controls}
       transition={{ type: "spring", duration: 1 }}
     >
-      <div className=" min-h-screen flex bg-black">
-        <div className="min-w-full flex justify-center items-center min-h-full px-20">
+      <div className="about-container">
+        <div className="about-flex" id="about">
           <Image
             src={logo}
             alt={""}
             className="rounded-md mr-5 border-2 border-cyan-50"
           />
-          <div className=" ml-5">
-            <h2 className="text-9xl italic mb-4">About</h2>
-            <p className="text-lg max-w-md mb-8">
+          <div className=" ml-5 about-margin "    >
+            <h2 className="text-9xl italic mb-4 about-title">About</h2>
+            <p className="text-lg max-w-md mb-8 about-text">
               Step into Sasa Barber Shop, where style has thrived since 1997.
               Our skilled barbers blend classic techniques with urban flair,
               crafting haircuts that define your individuality. From timeless
