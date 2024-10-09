@@ -302,7 +302,7 @@ export default function Dashboard() {
                                 className="mr-2"
                             />
                             <label htmlFor={service.name} style={{ color: '#101010', fontSize: 15 }} className="flex-1 text-lg">
-                                {service.name} - {service.price}
+                                {service.name}
                             </label>
                         </div>
                     ))}

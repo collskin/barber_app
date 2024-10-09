@@ -66,3 +66,12 @@ body {
     margin: 0;
   }
 }
+
+input[type='checkbox']{
+  cursor: pointer;
+}
+
+label{
+  cursor: pointer;
+  user-select: none;
+}
