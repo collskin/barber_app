@@ -9,36 +9,13 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import TimeCard from "./TimeCard";
-import { servicesList } from "@/app/data";
+import { generateTimeSlots, servicesList } from "@/app/data";
 
-const generateTimeSlots = (
-  start: number,
-  end: number,
-  interval: number
-): string[] => {
-  const times: string[] = [];
-  let current = start;
-
-  while (current <= end) {
-    const hours = Math.floor(current / 60);
-    const minutes = current % 60;
-    const time = `${hours.toString().padStart(2, "0")}:${minutes
-      .toString()
-      .padStart(2, "0")}`;
-    times.push(time);
-    current += interval;
-  }
-
-  return times;
-};
 
 const SelectionCard = ({ selectedTime, setSelectedTime, barber, ids, takenTime }: any) => {
 
-  const startTime = 9 * 60; // 9:00 AM in minutes
-  const endTime = 17 * 60 + 30; // 5:30 PM in minutes
-  const interval = 30; // 30 minutes
 
-  const timeSlots = generateTimeSlots(startTime, endTime, interval);
+  const timeSlots = generateTimeSlots();
 
   return (
     <div

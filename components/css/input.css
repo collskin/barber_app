@@ -3,7 +3,8 @@
     flex-direction: column;
     align-items: start;
     margin-bottom: 15px;
-    width: 100%;
+    width: 250px;
+
 }
 
 .input-label{
@@ -17,3 +18,4 @@
     width: 100%;
     color: black;
 }
+

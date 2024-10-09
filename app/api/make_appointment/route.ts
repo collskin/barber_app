@@ -6,19 +6,19 @@ export async function POST(request: NextRequest) {
   await dbConnect();
 
   const requestBody: Omit<Barber,'confirmed'> = await request.json();
-
+  const url = new URL(request.url);
+  const c = url.searchParams.get("confirmed")
   //VALIDACIJA
 
   try {
-    await BarberModel.create(
+    const resp = await BarberModel.create(
       {...requestBody,
-      confirmed:false
+      confirmed:c == 'true'
       }
     )
   
-  
     return NextResponse.json(
-      {message:'Zahtev je uspesno poslat'},
+      {message:{id:resp._id}},
       {status:200}
     )
   

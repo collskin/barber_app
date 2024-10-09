@@ -62,3 +62,26 @@ export function formatDateForInput(date: Date): string {
 
   return `${year}-${month}-${day}`;
 }
+
+export const generateTimeSlots = (
+): string[] => {
+
+  const start = 9 * 60; // 9:00 AM in minutes
+  const end = 17 * 60 + 30; // 5:30 PM in minutes
+  const interval = 30; // 30 minutes
+  
+  const times: string[] = [];
+  let current = start;
+
+  while (current <= end) {
+    const hours = Math.floor(current / 60);
+    const minutes = current % 60;
+    const time = `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
+    times.push(time);
+    current += interval;
+  }
+
+  return times;
+};

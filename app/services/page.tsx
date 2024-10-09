@@ -10,6 +10,7 @@ const ServicesPage = () => {
   const searchParams = useSearchParams();
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
   const [selectedServices, setSelectedServices] = useState<number[]>([]);
   const router = useRouter();
 
@@ -31,6 +32,7 @@ const ServicesPage = () => {
       <form>
         <Input placeholder="Unesite vase ime" value={name} type="text" label="Ime" onChange={(e: any) => setName(e.target.value)} />
         <Input placeholder="Unesite vas kontakt telefon" value={phone} type="tel" label="Telefon" onChange={(e: any) => setPhone(e.target.value)} />
+        <Input placeholder="Unesite vas e-mail" value={email} type="mail" label="E-mail" onChange={(e: any) => setEmail(e.target.value)} />
         {servicesList.map((service) => (
           <div key={service.name} className="flex items-center mb-4">
             <input
