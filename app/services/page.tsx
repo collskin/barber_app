@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import { objectToQueryParams, servicesList } from "../data";
 import { Input } from "@/components/Input";
 import './style.css'
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const ServicesPage = () => {
   const searchParams = useSearchParams();
@@ -23,11 +25,18 @@ const ServicesPage = () => {
   };
 
   const handleConfirmServices = () => {
+
+    if (!name || !phone || selectedServices.length < 1) {
+      toast.error('Ime, telefon, i usluge su obavezni')
+      return
+    }
+
     router.push("/select-date" + objectToQueryParams({ barber: searchParams.get('barber'), ids: selectedServices, name, phone, email }));
   };
 
   return (
     <div className="min-w-full min-h-screen bg-black p-8 flex justify-center items-center flex-col services-container">
+      <ToastContainer />
       <h1 className="text-3xl font-bold mb-6 services-title "  >Ostavite podatke i odaberite usluge</h1>
       <form>
         <Input placeholder="Unesite vase ime" value={name} type="text" label="Ime" onChange={(e: any) => setName(e.target.value)} />
