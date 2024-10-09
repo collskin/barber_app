@@ -29,7 +29,7 @@ const SelectionCard = ({ selectedTime, setSelectedTime, barber, ids, takenTime }
             className="align-middle"
           />
           <span>  </span>
-          {barber == 'sasa' ? 'Sasa Vuckovic' : 'Danijel Maksimovic'}
+          {barber == 'sasa' ? 'Saša Vučković' : 'Danijel Maksimović'}
         </p>
       </div>
       <div className="flex items-center ml-2">

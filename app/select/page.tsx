@@ -16,7 +16,7 @@ export default function SelectBarber() {
 
   return (
     <main className="min-w-full min-h-screen bg-black flex flex-col justify-center items-center barbers-container">
-      <div className="pb-24 text-white text-2xl">Choose your barber: </div>
+      <div className="pb-24 text-white text-2xl">Odaberite frizera: </div>
       <div className="flex justify-between min-w-96 barbers-flex">
         <div
           className="barber-card min-w-48 rounded-[8px] mr-7 flex flex-col justify-center items-center cursor-pointer bg-primary-grey-bg hover:bg-secondary-grey-bg transition-colors duration-300"
@@ -33,8 +33,8 @@ export default function SelectBarber() {
             }}
             className="object-cover"
           />
-          <p className="text-white mt-3">Barber Sasa</p>
-          <p className="text-white mt-7 mb-5 select-text ">Select Barber</p>
+          <p className="text-white mt-3">Frizer Saša</p>
+          <p className="text-white mt-7 mb-5 select-text ">Odaberi</p>
         </div>
         <div
           className="barber-card min-w-48 rounded-[8px] mr-7 flex flex-col justify-center items-center cursor-pointer p-1 bg-primary-grey-bg hover:bg-secondary-grey-bg transition-colors duration-300"
@@ -51,8 +51,8 @@ export default function SelectBarber() {
             }}
             className="object-cover"
           />
-          <p className="text-white mt-3">Barber Danijel</p>
-          <p className="text-white mt-7 mb-5 select-text ">Select Barber</p>
+          <p className="text-white mt-3">Frizer Danijel</p>
+          <p className="text-white mt-7 mb-5 select-text ">Odaberi</p>
         </div>
       </div>
     </main>

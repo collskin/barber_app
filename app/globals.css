@@ -34,16 +34,31 @@ body {
   }
 }
 
+.open-nav{
+  display: none;
+}
 
 @media only screen and (max-width: 600px) {
   .nav{
     display: none;
   }
 
+  .open-nav{
+    display: block;
+    margin: 0;
+  }
+
   header{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0 15px !important;
+
+  }
+
+  .header-title{
+    width: auto;
+    margin: 0;
   }
 
   header p{

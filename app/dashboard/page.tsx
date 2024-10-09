@@ -36,7 +36,7 @@ export default function Dashboard() {
         clientName: '',
         clientPhone: '',
         clientEmail: '',
-        barberName: 'Sasa',
+        barberName: 'Saša',
         time: ''
     })
 
@@ -181,7 +181,7 @@ export default function Dashboard() {
                                 style={{ marginBottom: 0 }}
                             />
                             <span> </span>
-                            {r.barberName == 'sasa' ? 'Sasa ' : 'Danijel '}
+                            {r.barberName == 'sasa' ? 'Saša ' : 'Danijel '}
                         </p>
 
 
@@ -257,6 +257,10 @@ export default function Dashboard() {
                 </div>
                 <FontAwesomeIcon
                     icon={faSignOut}
+                    onClick={() => {
+                        localStorage.removeItem('token')
+                        router.push('/')
+                    }}
                     size="sm"
                     className="align-middle"
                     style={{ marginBottom: 0, height: '1.5rem', cursor: 'pointer' }}
@@ -281,7 +285,7 @@ export default function Dashboard() {
                     <Input border label='Ime' onChange={(e: any) => handleChange(e, 'clientName')} value={data.clientName} type='text' placeholder='Unesite ime' />
                     <Input border label='Telefon ' onChange={(e: any) => handleChange(e, 'clientPhone')} value={data.clientPhone} type='tel' placeholder='Unesite telefon' />
                     <Input border label='E-mail ' onChange={(e: any) => handleChange(e, 'clientEmail')} value={data.clientEmail} type='mail' placeholder='Unesite e-mail' />
-                    <Select label='Frizer' onChange={(e: any) => handleChange(e, 'barberName')} options={(["Sasa", "Danijel"])} value={data.barberName} />
+                    <Select label='Frizer' onChange={(e: any) => handleChange(e, 'barberName')} options={(["Saša", "Danijel"])} value={data.barberName} />
                     <Select label='Termin' onChange={(e: any) => handleChange(e, 'time')} options={availableTimes} value={data.time} />
                 </div>
                 <p style={{ display: 'block', color: '#101010', marginBottom: 10 }} > Usluge:</p>

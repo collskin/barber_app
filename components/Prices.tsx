@@ -28,26 +28,26 @@ const Prices = () => {
       <div className="prices-container" id="services" >
         <div className=" prices-wrapper min-w-full flex justify-center items-center min-h-full px-20">
           <div className="prices-limiter w-1/2">
-            <h2 className="text-7xl  mb-4 prices-title">Prices:</h2>
+            <h2 className="text-7xl  mb-4 prices-title">Usluge:</h2>
             <div className="flex flex-col min-w-full">
               <div className="min-w-full">
                 <div className="flex items-center mb-4">
-                  <div className="w-[50%]">Haircut</div>
+                  <div className="w-[50%]">Šišanje</div>
                   <div className="w-full bg-white h-1"></div>
                   <div className="w-1/3 text-right">800 RSD</div>
                 </div>
                 <div className="flex items-center mb-4">
-                  <div className="w-[50%]">Haircut + Beard Trim</div>
+                  <div className="w-[50%]">Šišanje + Brijanje brade</div>
                   <div className="w-full bg-white h-1"></div>
                   <div className="w-1/3 text-right">1200 RSD</div>
                 </div>
                 <div className="flex items-center mb-4">
-                  <div className="w-[50%]">Beard Trim</div>
+                  <div className="w-[50%]">Brijanje brade</div>
                   <div className="w-full bg-white h-1"></div>
                   <div className="w-1/3 text-right">800 RSD</div>
                 </div>
                 <div className="flex items-center mb-4">
-                  <div className="w-[50%]">Hair cut + Washing Hair</div>
+                  <div className="w-[50%]">Šišanje + Pranje kose</div>
                   <div className="w-full bg-white h-1"></div>
                   <div className="w-1/3 text-right">00 RSD</div>
                 </div>
