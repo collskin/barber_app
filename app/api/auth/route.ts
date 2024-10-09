@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     await request.json();
 
   try {
-    if (username == "sasa@sasaberber.com" && password == "SasaAdmin") {
+    if (username == "sasa@sasabarber.com" && password == "SasaAdmin") {
       const token = jwt.sign(username, process.env.TOKEN_SECRET as string);
 
       return NextResponse.json({ message: { token } }, { status: 200 });

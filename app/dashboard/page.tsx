@@ -194,7 +194,7 @@ export default function Dashboard() {
                                 style={{ marginBottom: 0 }}
                             />:
                             <span> </span>
-                            {servicesList.filter((s) => r.services.some(ss => ss == s.id)).map(s => <p>{s.name} {s.price}</p>)}
+                            {servicesList.filter((s) => r.services.some(ss => ss == s.id)).map(s => <p>{s.name}</p>)}
                         </p>
                         {r.confirmed && <p style={{ color: 'green' }} >
                             <FontAwesomeIcon

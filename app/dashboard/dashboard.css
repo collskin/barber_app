@@ -151,6 +151,10 @@
     transition: .3s ease;
   }
 
+  .dashboard-button p{
+    margin: 0;
+  }
+
   .dashboard-button:hover{
     background-color: rgb(201, 199, 199);
 
