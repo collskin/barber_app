@@ -23,7 +23,7 @@ const ServicesPage = () => {
   };
 
   const handleConfirmServices = () => {
-    router.push("/select-date" + objectToQueryParams({ barber: searchParams.get('barber'), ids: selectedServices, name, phone }));
+    router.push("/select-date" + objectToQueryParams({ barber: searchParams.get('barber'), ids: selectedServices, name, phone, email }));
   };
 
   return (

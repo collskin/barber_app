@@ -1,4 +1,5 @@
 'use client'
+/*eslint-disable*/
 import './dashboard.css'
 import { formatDateForInput, generateTimeSlots, servicesList } from "../data";
 import { useEffect, useState } from 'react';

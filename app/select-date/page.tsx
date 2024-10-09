@@ -22,6 +22,7 @@ const DatePickerPage = () => {
   const barberName = searchParams.get('barber')
   const clientName = searchParams.get('name')
   const clientPhone = searchParams.get('phone')
+  const clientEmail = searchParams.get('email')
   const router = useRouter();
 
   const onChange = (date: Dayjs) => {
@@ -53,6 +54,7 @@ const DatePickerPage = () => {
       const resp = await axios.post('api/make_appointment', {
         clientName,
         clientPhone,
+        clientEmail,
         barberName,
         services: ids?.split(','),
         time: selectedTime,
