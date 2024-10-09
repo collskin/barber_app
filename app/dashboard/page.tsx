@@ -10,7 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { RingLoader } from 'react-spinners';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAt, faCheck, faClock, faHeadSideCough, faPerson, faPersonArrowUpFromLine, faPersonBooth, faPhone, faPlus, faScissors } from '@fortawesome/free-solid-svg-icons';
+import { faAt, faCheck, faClock, faPersonBooth, faPhone, faPlus, faScissors, faSignOut, faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import { Input } from '@/components/Input';
 import { Select } from '@/components/Select';
 import { useRouter } from 'next/navigation';
@@ -23,6 +23,14 @@ export default function Dashboard() {
     const [selectedServices, setSelectedServices] = useState([])
     const [availableTimes, setAvailableTimes] = useState<string[]>([])
     const router = useRouter();
+    if (localStorage) {
+        const token = localStorage.getItem('token')
+
+        if (!token) {
+            router.push('/')
+        }
+    }
+
 
     const [data, setData] = useState({
         clientName: '',
@@ -231,19 +239,30 @@ export default function Dashboard() {
         />
         <ToastContainer />
         <div className='dashboard-top' >
+
             <div>
                 <p>Odaberite datum</p>
                 <input value={formatDateForInput(date)} className='date-input' type="date" onChange={v => setDate(v.target.valueAsDate as Date)} />
             </div>
-            <div className='dashboard-button' onClick={() => !loading && setModal(true)} >
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }} >
+
+                <div className='dashboard-button' onClick={() => !loading && setModal(true)} >
+                    <FontAwesomeIcon
+                        icon={faPlus}
+                        size="sm"
+                        className="align-middle"
+                        style={{ marginBottom: 0 }}
+                    />
+                    <p>Zakazi termin</p>
+                </div>
                 <FontAwesomeIcon
-                    icon={faPlus}
+                    icon={faSignOut}
                     size="sm"
                     className="align-middle"
-                    style={{ marginBottom: 0 }}
+                    style={{ marginBottom: 0, height: '1.5rem', cursor: 'pointer' }}
                 />
-                <p>Zakazi termin</p>
             </div>
+
         </div>
 
         <div className='dashboard-list' >
