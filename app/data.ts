@@ -1,8 +1,8 @@
 export const servicesList = [
-    { name: "Haircut", price: 800, id: 1 },
-    { name: "Haircut + Beard Trim", price: 1200, id: 2 },
-    { name: "Beard Trim", price: 800, id: 3 },
-    { name: "Haircut + Washing Hair", price: 1000, id: 4 },
+    { name: "Šišanje", price: 800, id: 1 },
+    { name: "Šišanje + Brijanje brade", price: 1200, id: 2 },
+    { name: "Brijanje brade", price: 800, id: 3 },
+    { name: "Šišanje + Pranje kose", price: 1000, id: 4 },
   ];
 
 
