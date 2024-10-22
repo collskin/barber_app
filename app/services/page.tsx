@@ -1,71 +1,190 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useState } from "react";
-import { objectToQueryParams, servicesList } from "../data";
+import React, { useEffect, useState } from "react";
 import { Input } from "@/components/Input";
 import './style.css'
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { IServiceResponse } from "../admin/types";
+import axios from "axios";
+import { ClipLoader } from "react-spinners";
+import SelectionCard from "@/components/SelectionCard";
+import { CustomCalendar } from "@/components/CustomCalendar";
+import { Dayjs } from "dayjs";
+import { formatDate, isBeforeNov } from "../data";
 
 const ServicesPage = () => {
   const searchParams = useSearchParams();
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
-  const [selectedServices, setSelectedServices] = useState<number[]>([]);
+  const [services, setServices] = useState<IServicesCheckbox[]>([])
+  const [loading, setLoading] = useState(false)
   const router = useRouter();
 
-  const handleCheckboxChange = (serviceId: number) => {
-    setSelectedServices((prevSelected) =>
-      prevSelected.includes(serviceId)
-        ? prevSelected.filter((id) => id !== serviceId)
-        : [...prevSelected, serviceId]
-    );
+  const [selectedDate, setSelectedDate] = useState<Date>(isBeforeNov() ? new Date(2024, 10, 1) : new Date());
+  const [selectedTime, setSelectedTime] = useState<string[]>()
+  const [takenTime, setTakenTime] = useState<string[]>([])
+  const barberName = searchParams.get('barber')
+
+  const onChange = (date: Dayjs) => {
+    if (isBeforeNov(date.toDate())) {
+      return
+    }
+    setSelectedDate(date.toDate());
   };
 
-  const handleConfirmServices = () => {
 
-    if (!name || !phone || selectedServices.length < 1) {
-      toast.error('Ime, telefon, i usluge su obavezni')
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true)
+      try {
+        const resp = await axios.get('api/services')
+        setServices(resp.data.map((r: IServiceResponse) => ({ ...r, checked: false })))
+        setLoading(false)
+      } catch (error) {
+        console.log(error)
+        setLoading(false)
+        alert('Greška pri učitavanju podataka.')
+      }
+
+    }
+    fetchData()
+
+  }, [])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true)
+      try {
+        const resp = await axios.get('api/get-available?date=' + formatDate(selectedDate) + '&barberName=' + barberName)
+        setTakenTime(resp.data)
+        setLoading(false)
+      } catch (error) {
+        console.log(error)
+        setLoading(false)
+        alert('Greška pri učitavanju podataka')
+      }
+
+    }
+    fetchData()
+
+  }, [selectedDate])
+
+
+  const handleSubmit = async () => {
+
+    if (!selectedTime?.length) {
+      toast.error('Termin mora biti odabran.')
       return
     }
 
-    router.push("/select-date" + objectToQueryParams({ barber: searchParams.get('barber'), ids: selectedServices, name, phone, email }));
+    if (!name || !phone || !email || !services.length) {
+      toast.error('Svi podaci moraju biti uneti.')
+      return
+    }
+
+    setLoading(true)
+    try {
+      const resp = await axios.post('api/make_appointment', {
+        clientName: name,
+        clientPhone: phone,
+        clientEmail: email,
+        barberName,
+        services: services.filter(s => s.checked).map(s => s._id),
+        time: selectedTime,
+        date: formatDate(selectedDate)
+      })
+
+      if (resp.status == 200) {
+        toast.success('Zahtev je uspešno poslat, potvrda termina će stići na Vašu e-mail adresu.', { onClose: () => router.push("/") })
+        setLoading(false)
+      }
+    } catch (error) {
+      setLoading(false)
+      console.log(error)
+      toast.error('Došlo je do greške.')
+    }
+
+  }
+
+  const handleCheckboxChange = (serviceId: string) => {
+    setSelectedTime([])
+    setServices(prev => {
+      const copy = structuredClone(prev)
+      const index = copy.findIndex(s => s._id == serviceId)
+      copy[index].checked = !copy[index].checked
+      return copy
+    })
   };
 
   return (
+
     <div className="min-w-full min-h-screen bg-black p-8 flex justify-center items-center flex-col services-container">
+      <ClipLoader
+        loading={loading}
+        color={"#5d5ce5"}
+        cssOverride={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          opacity: 1,
+        }}
+        size={150}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
       <ToastContainer />
-      <h1 className="text-3xl font-bold mb-6 services-title "  >Ostavite podatke i odaberite usluge</h1>
-      <form>
-        <Input placeholder="Unesite vase ime" value={name} type="text" label="Ime" onChange={(e: any) => setName(e.target.value)} />
-        <Input placeholder="Unesite vas kontakt telefon" value={phone} type="tel" label="Telefon" onChange={(e: any) => setPhone(e.target.value)} />
-        <Input placeholder="Unesite vas e-mail" value={email} type="mail" label="E-mail" onChange={(e: any) => setEmail(e.target.value)} />
-        {servicesList.map((service) => (
-          <div key={service.name} className="flex items-center mb-4">
-            <input
-              type="checkbox"
-              id={service.name}
-              name={service.name}
-              checked={selectedServices.includes(service.id)}
-              onChange={() => handleCheckboxChange(service.id)}
-              className="mr-4"
-            />
-            <label htmlFor={service.name} className="flex-1 text-lg">
-              {service.name} - {service.price}
-            </label>
+      <h1 className="text-3xl font-bold mb-4 services-title " style={{ color: 'white' }}>Ostavite podatke i odaberite usluge</h1>
+      <p style={{ color: 'white', textAlign: 'center' }} >Za dodatne termine pozvati na broj: +381 64 11 52 273</p>
+      <div className="services-wrapper" >
+        <div className="services-info" >
+          <Input placeholder="Unesite vase ime" value={name} type="text" label="Ime" onChange={(e: any) => setName(e.target.value)} />
+          <Input placeholder="Unesite vas kontakt telefon" value={phone} type="tel" label="Telefon" onChange={(e: any) => setPhone(e.target.value)} />
+          <Input placeholder="Unesite vas e-mail" value={email} type="mail" label="E-mail" onChange={(e: any) => setEmail(e.target.value)} />
+          {services.map((service) => (
+            <div key={service.name} className="flex items-center ">
+              <input
+                type="checkbox"
+                id={service.name}
+                name={service.name}
+                checked={service.checked}
+                onChange={() => handleCheckboxChange(service._id)}
+                className="mr-4"
+              />
+              <label htmlFor={service.name} className="flex-1 text-lg" style={{ color: 'white' }}>
+                {service.name} - {service.price}
+              </label>
+            </div>
+          ))}
+        </div>
+        <div className="services-dates" >
+          <div className="flex justify-center items-center date-flex  " >
+            <div className="flex justify-center flex-col mr-5 calendar-container" >
+              <CustomCalendar
+                onChange={onChange}
+              />
+            </div>
+            <SelectionCard loading={loading} date={selectedDate} services={services} takenTime={Array.isArray(takenTime) ? takenTime : []} barber={barberName} selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
           </div>
-        ))}
-      </form>
+        </div>
+      </div>
       <button
         className="min-w-56 min-h-10 bg-secondary-grey-bg rounded-md mt-4"
-        onClick={handleConfirmServices}
+        onClick={handleSubmit}
       >
-        Dalje
+        Pošalji
       </button>
     </div>
   );
 };
 
+export interface IServicesCheckbox extends IServiceResponse {
+  checked: boolean
+}
+
 export default ServicesPage;
+

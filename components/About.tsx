@@ -3,13 +3,11 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import logo from "../public/sale-logo.svg";
-import { motion, useAnimation } from "framer-motion";
+import { useAnimation } from "framer-motion";
 import { useRouter } from "next/navigation";
 import "./css/about.css";
-
 export const About = () => {
   const router = useRouter();
-  const ref = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
 
   useEffect(() => {
@@ -21,12 +19,10 @@ export const About = () => {
   };
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ x: "-100vw" }} // Initial position off-screen
-      animate={controls}
-      transition={{ type: "spring", duration: 1 }}
-    >
+    <>
+      <title>Saša Barber - Frizer Kruševac</title>
+      <meta name="description" content="Profesionalni frizerski salon Saša Barber u Kruševcu." />
+      <meta name="keywords" content="frizer Kruševac, frizerski salon Kruševac, Saša Barber, dobar frizer, šišanje, brijanje, brada, brijanje brade, trim, beard, haircut, kosa" />
       <div className="about-container">
         <div className="about-flex" id="about">
           <Image
@@ -34,10 +30,10 @@ export const About = () => {
             alt={""}
             className="rounded-md mr-5 border-2 border-cyan-50"
           />
-          <div className=" ml-5 about-margin ">
-            <h2 className="text-9xl italic mb-4 about-title">O nama</h2>
-            <p className="text-lg max-w-md mb-8 about-text">
-              Zakoračite u naš salog, gde stil cveta od 1997. Naši vešti
+          <main className=" ml-5 about-margin ">
+            <h2 className="text-9xl italic mb-4 about-title" style={{ color: 'white' }} >O nama</h2>
+            <p style={{ color: 'white' }} className="text-lg max-w-md mb-8 about-text">
+              Zakoračite u naš salon, gde stil cveta od 1997. Naši vešti
               frizeri spajaju klasične tehnike sa urbanim stilom, praveći
               frizure koje definišu vašu individualnost. Od vanvremenske
               sofisticiranosti do savremene ivice, krojimo svaki kroj tako da
@@ -50,12 +46,13 @@ export const About = () => {
             <button
               className="rounded-md p-1 bg-secondary-grey-bg text-2xl w-48 h-12 mb-16"
               onClick={handleBook}
+              style={{ color: 'white' }}
             >
               ZAKAŽI
             </button>
-          </div>
+          </main>
         </div>
       </div>
-    </motion.div>
-  );
+    </>
+  )
 };

@@ -1,0 +1,28 @@
+.auth-container {
+  background-color: #f1f1fb !important;
+  min-height: 100vh;
+  height: max-content;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+}
+
+.auth-inputs{
+    display: flex;
+    flex-direction: column;
+}
+
+.login-button{
+    margin-top: 1rem;
+    width: 250px;
+    height: 40px;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: blueviolet; 
+}

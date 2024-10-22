@@ -4,7 +4,6 @@
     align-items: start;
     margin-bottom: 15px;
     width: 250px;
-
 }
 
 .input-label{
@@ -17,5 +16,42 @@
     padding: 5px;
     width: 100%;
     color: black;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    border-radius: 5px;
 }
 
+.admin-label{
+    color: #252965 !important;
+}
+
+
+select{
+    color: #101010;
+    width: 100%;
+    height: 2.05rem;
+    padding: 5px;
+    border-radius: 5px;
+    border: none !important;
+    cursor: pointer;
+    border: 1px solid #101010 !important;
+}
+
+.admin-select{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    border: none !important;
+
+}
+
+
+@media only screen and (max-width: 600px) {
+
+    input{
+        font-size: .8rem;
+    }
+
+    .input-label{
+        font-size: .8rem;
+    }
+
+}

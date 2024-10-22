@@ -22,7 +22,39 @@
     width:500px
 }
 
+.confirm-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirm-button p{
+    margin: 0;
+}
+
+.confirm-button svg {
+    display: none;
+}
+
 @media only screen and (max-width: 600px) {
+
+    .confirm-button{
+        gap: 2rem;
+        position: fixed;
+        right: 1.5rem;
+        bottom: 3rem;
+        min-width: unset;
+        width: 3rem !important;
+        height: 3rem !important;
+    }
+    
+    .confirm-button p{
+        display: none;
+    }
+
+    .confirm-button svg {
+        display: block;
+    }
 
     .date-page-container{
         height: max-content;

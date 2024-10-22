@@ -1,3 +1,6 @@
+import { IAppointmentResponse } from "./admin/types";
+import { Barber, IBarberWithServicesObject } from "./models/Barber";
+
 export const servicesList = [
     { name: "Šišanje", price: 800, id: 1 },
     { name: "Šišanje + Brijanje brade", price: 1200, id: 2 },
@@ -83,5 +86,73 @@ export const generateTimeSlots = (
     current += interval;
   }
 
-  return times;
+  return ['08:30' ,...times.filter(t=>t!=='13:30')];
 };
+
+export const months = ['Januar','Februar', 'Mart', 'April', 'Maj', 'Jun', 'Jul', 'Avgust', 'Septembar', 'Oktobar', 'Novembar', 'Decembar']
+
+export const validateEmail = (email: string) => {
+  return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    )
+}
+
+
+export const getTakenTimes = (resp:IBarberWithServicesObject[]) =>{
+
+  const times = []
+  for(let r of resp){
+      const scheduleArray = generateTimeSlots()
+      let startIndex = scheduleArray.indexOf(String(r.time[0]));
+      if (startIndex === -1) {
+          throw new Error("Start time not found in the schedule array.");
+      }
+      const totalSlots = r.servicesDetails.reduce((a,c) => a+c.slots,0)
+
+
+      for (let i = 0; i < totalSlots; i++) {
+          let currentIndex = startIndex + i;
+          if (currentIndex < scheduleArray.length) {
+              times.push(scheduleArray[currentIndex]);
+          } else {
+              break; 
+          }
+      }
+  }
+
+  //@ts-ignore
+   return [...new Set(times)]
+
+}
+
+export const formatDate = (date:Date |string) =>{
+  const dt = new Date(date)
+  return dt.getMonth()+1+'/'+dt.getDate()+'/'+dt.getFullYear()
+}
+
+
+export function sortAppointmentsByFirstTime(appointments: IAppointmentResponse[]): IAppointmentResponse[] {
+  return appointments.sort((a, b) => {
+    // Extract the first time from both arrays
+    const timeA = a.time[0];
+    const timeB = b.time[0];
+
+    // Use localeCompare to compare the times
+    return timeA.localeCompare(timeB);
+  });
+}
+
+export const isBeforeNov = (date?:Date) =>{
+  const dt = date ?? new Date()
+  const month = dt.getMonth()
+  const year = dt.getFullYear()
+
+  if((year == 2024 && month < 10)){
+    return true
+  }
+
+  return false
+
+}

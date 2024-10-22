@@ -1,8 +1,8 @@
 "use client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { RingLoader } from "react-spinners";
+import React, { useEffect, useState } from "react";
+import { ClipLoader } from "react-spinners";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -12,6 +12,18 @@ const Header = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [token, setToken] = useState('')
+  // useEffect(() => {
+  //   try {
+  //     if (token && localStorage.getItem('token')) {
+  //       localStorage.setItem('token', token)
+  //     }
+  //   } catch (error) {
+
+  //   }
+
+  // }, [token])
+
   const router = useRouter();
 
   const handleOpenModal = () => {
@@ -33,10 +45,11 @@ const Header = () => {
   };
 
   const handleLogin = async () => {
+
     try {
       setLoading(true)
       const resp = await axios.post('/api/auth', { username, password })
-      localStorage.setItem('token', resp.data.message.token)
+      setToken(resp.data.message.token)
       setLoading(false)
       router.push("/dashboard");
       handleCloseModal()
@@ -57,7 +70,7 @@ const Header = () => {
     <>
       <ToastContainer />
       <header className="bg-primary-bg flex py-2">
-        <RingLoader
+        <ClipLoader
           loading={loading}
           color={'#1c7aad'}
           cssOverride={{
@@ -72,25 +85,25 @@ const Header = () => {
           data-testid="loader"
         />
         <div className="w-8/12 ml-7 header-title" >
-          <p className="py-2 font-medium">Saša Barber</p>
+          <p className="py-2 font-medium" style={{ color: 'white' }} >Saša Barber</p>
         </div>
         <div className="justify-center items-center flex nav "  >
           <a href="#about" ><p className="mx-4 py-2 cursor-pointer font-medium">O name</p></a>
           <a href="#services"><p className="mx-4 py-2 cursor-pointer font-medium">Usluge</p></a>
           <a href="#contact"><p className="mx-4 py-2 cursor-pointer font-medium">Kontakt</p></a>
-          <p
+          {/* <p
             className="mx-4 py-2 cursor-pointer font-medium"
             onClick={handleOpenModal}
           >
             Prijava
-          </p>
+          </p> */}
         </div>
-        <p
+        {/* <p
           className="mx-4 py-2 cursor-pointer font-medium open-nav"
           onClick={handleOpenModal}
         >
           Prijava
-        </p>
+        </p> */}
         {isOpen && (
           <div
             className="fixed inset-0 bg-primary-bg bg-opacity-50 flex items-center justify-center z-50 animate-fade-in"

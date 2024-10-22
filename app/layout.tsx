@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Roboto, Rubik } from "next/font/google";
 import "./globals.css";
+import AuthProvider from './context/AuthProvider'
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,8 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sr">
-
-      <body className={rubik.className}>{children}</body>
+      <AuthProvider>
+        <body className={rubik.className}>{children}</body>
+      </AuthProvider>
 
     </html>
   );

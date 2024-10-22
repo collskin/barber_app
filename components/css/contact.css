@@ -1,7 +1,8 @@
 .contact-container{
-    width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    height: max-content;
     background-color: black;
+    padding-bottom: 6rem;
 }
 .contact-flex{
     display: flex;
@@ -23,18 +24,35 @@
 }
 
 /* w-1/2 justify-end items-center flex bg-black pr-20 pl-22 */
-.contact-map{
-    width: 80vw;
+.contact-img{
+    width: 55vw;
+    max-height: 450px;
     display: flex;
     align-content: center;
     justify-content: center;
     background-color: black;
 }
 
+.map-container{
+    width: 70% ;
+    height: 600px;
+    overflow: hidden;
+}
+
 @media only screen and (max-width: 600px) {
+
+    .map-container{
+        width: 95% ;
+        height: 350px;
+    }
+    
+    .contact-img{
+        width: 90vw;
+        max-height: 550px;
+    }
     
     .contact-container > h2{
-        font-size: 4rem;
+        font-size: 3rem;
     }
 
     .contact-container *{

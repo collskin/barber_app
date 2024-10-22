@@ -1,5 +1,4 @@
 .about-container{
-    width: 100vw;
     height: 100vh;
     background-color: #101010;
 }
@@ -37,11 +36,11 @@
     }
 
     .about-title{
-        font-size: 4rem !important;
+        font-size: 3rem !important;
     }
 
     .about-text{
-        font-size: 1rem !important;
+        font-size: .8rem !important;
     }
 
 }

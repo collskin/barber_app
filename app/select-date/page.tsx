@@ -2,15 +2,18 @@
 
 import './style.css'
 import React, { useEffect, useState } from "react";
-import { DatePicker, ConfigProvider, Calendar, CalendarProps } from "antd";
-import dayjs, { Dayjs } from "dayjs";
-import "antd/dist/reset.css";
+import { Dayjs } from "dayjs";
 import SelectionCard from "@/components/SelectionCard";
 import { useSearchParams } from "next/navigation";
 import axios from 'axios';
-import { toast } from 'react-toastify';
-import { RingLoader } from 'react-spinners';
+import { toast, ToastContainer } from 'react-toastify';
+import { ClipLoader } from 'react-spinners';
 import { useRouter } from 'next/navigation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import 'react-toastify/dist/ReactToastify.css';
+import { CustomCalendar } from '@/components/CustomCalendar';
+import { formatDate } from '../data';
 
 const DatePickerPage = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -33,7 +36,7 @@ const DatePickerPage = () => {
     const fetchData = async () => {
       setLoading(true)
       try {
-        const resp = await axios.get('api/get-available?date=' + selectedDate?.toLocaleDateString())
+        const resp = await axios.get('api/get-available?date=' + formatDate(selectedDate) + '&barberName=' + barberName)
         setTakenTime(resp.data)
         setLoading(false)
       } catch (error) {
@@ -58,25 +61,25 @@ const DatePickerPage = () => {
         barberName,
         services: ids?.split(','),
         time: selectedTime,
-        date: selectedDate?.toLocaleDateString()
+        date: formatDate(selectedDate)
       })
 
       if (resp.status == 200) {
-        toast.success('Zahtev je uspesno poslat, sacekajte potvrdu')
+        toast.success('Zahtev je uspešno poslat, potvrda termina će stići na Vašu e-mail adresu.', { onClose: () => router.push("/") })
         setLoading(false)
-        router.push("/")
       }
     } catch (error) {
       setLoading(false)
       console.log(error)
-      toast.error('Doslo je do greska.')
+      toast.error('Došlo je do greške.')
     }
 
   }
 
   return (
     <div className="date-page-container">
-      <RingLoader
+      <ToastContainer />
+      <ClipLoader
         loading={loading}
         color={'#1c7aad'}
         cssOverride={{
@@ -93,21 +96,24 @@ const DatePickerPage = () => {
       <h2 style={{ marginRight: "35%" }}>Odaberite termin</h2>
       <div className="flex justify-center items-center date-flex  " >
         <div className="flex justify-center flex-col mr-5 calendar-container" >
-          <Calendar
-            fullscreen={false}
-            mode="month"
-            className='calendar'
+          <CustomCalendar
             onChange={onChange}
-          // value={undefined}
           />
         </div>
         <SelectionCard takenTime={takenTime} barber={barberName} ids={searchParams.get('ids')?.split(',')} selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
       </div>
       {selectedTime && <button
-        className="min-w-56 min-h-10 bg-secondary-grey-bg rounded-md mt-4"
+        className="min-w-56 min-h-10 bg-secondary-grey-bg rounded-md mt-4 confirm-button"
         onClick={handleSubmit}
       >
-        Potvrdi
+        <FontAwesomeIcon
+          icon={faCheck}
+          size="sm"
+          color='white'
+          style={{ height: '1.3rem' }}
+          className="align-middle"
+        />
+        <p>Potvrdi</p>
       </button>}
     </div>
   );

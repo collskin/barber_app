@@ -10,7 +10,7 @@ export async function DELETE(request: NextRequest,{params}:{params:{id:string}})
     const { id } = params;
     await BarberModel.findOneAndDelete({_id:id})
     return NextResponse.json(
-      { message: "Termin uspesno odbijen" },
+      { message: "Termin uspesno obrisan" },
       { status: 200 }
     );
   } catch (error) {

@@ -6,7 +6,6 @@ import barber_two from "../../assets/barber_two.jpg";
 import { useRouter } from "next/navigation";
 import './style.css'
 
-
 export default function SelectBarber() {
   const router = useRouter();
 
@@ -16,43 +15,45 @@ export default function SelectBarber() {
 
   return (
     <main className="min-w-full min-h-screen bg-black flex flex-col justify-center items-center barbers-container">
-      <div className="pb-24 text-white text-2xl">Odaberite frizera: </div>
+      <div className="pb-24 text-white text-2xl" style={{ color: 'white' }}>Odaberite frizera: </div>
       <div className="flex justify-between min-w-96 barbers-flex">
-        <div
-          className="barber-card min-w-48 rounded-[8px] mr-7 flex flex-col justify-center items-center cursor-pointer bg-primary-grey-bg hover:bg-secondary-grey-bg transition-colors duration-300"
-          onClick={() => handleSelectBarber('sasa')}
-        >
-          <Image
-            src={barber_one}
-            alt=""
-            style={{
-              width: "320px",
-              height: "320px",
-              borderRadius: "50%",
-              padding: "12px",
-            }}
-            className="object-cover"
-          />
-          <p className="text-white mt-3">Frizer Saša</p>
-          <p className="text-white mt-7 mb-5 select-text ">Odaberi</p>
+        <div className="barber-card" onClick={() => handleSelectBarber('Saša')}>
+          <div className="barber-card__images" >
+            <div className="dbc-select" >
+              <h1 >Odaberi</h1>
+            </div>
+            <Image
+              src={barber_one}
+              alt=""
+              className="cover-img"
+            />
+            <Image
+              src={barber_one}
+              alt=""
+              className="circular-img"
+            />
+          </div>
+          <h2 style={{ color: 'white' }}>Frizer Saša</h2>
+
         </div>
-        <div
-          className="barber-card min-w-48 rounded-[8px] mr-7 flex flex-col justify-center items-center cursor-pointer p-1 bg-primary-grey-bg hover:bg-secondary-grey-bg transition-colors duration-300"
-          onClick={() => handleSelectBarber('ujka')}
-        >
-          <Image
-            src={barber_two}
-            alt=""
-            style={{
-              width: "320px",
-              height: "320px",
-              borderRadius: "50%",
-              padding: "8px",
-            }}
-            className="object-cover"
-          />
-          <p className="text-white mt-3">Frizer Danijel</p>
-          <p className="text-white mt-7 mb-5 select-text ">Odaberi</p>
+
+        <div className="barber-card" onClick={() => handleSelectBarber('danijel')}>
+          <div className="dbc-select" >
+            <h1>Odaberi</h1>
+          </div>
+          <div className="barber-card__images" >
+            <Image
+              src={barber_one}
+              alt=""
+              className="cover-img"
+            />
+            <Image
+              src={barber_two}
+              alt=""
+              className="circular-img"
+            />
+          </div>
+          <h2 style={{ color: 'white' }}>Frizer Danijel</h2>
         </div>
       </div>
     </main>

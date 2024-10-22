@@ -11,7 +11,7 @@ export async function dbConnect() {
       console.log("Connected from previous");
       return global.mongoose.conn;
     } else {
-      const conString = process.env.MONGODB_URI;
+      const conString = 'mongodb+srv://Veljko:Veljko123@cluster0.vsesy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
       const promise = mongoose.connect(conString, {
         autoIndex: true,
@@ -27,6 +27,7 @@ export async function dbConnect() {
     }
   } catch (error) {
     console.error("Error connecting to the database:", error);
+    return error
     throw new Error("Database connection failed");
   }
 }

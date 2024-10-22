@@ -1,5 +1,6 @@
 // models/Barber.ts
 import mongoose, { Schema, model, Document } from "mongoose";
+import { IServiceResponse } from "../admin/types";
 
 export interface Barber extends Document {
   barberName:string
@@ -7,10 +8,14 @@ clientName:string
 clientPhone:string
 clientEmail:string
 date:Date
-time:string
-services:number[]
+time:string[]
+services:string[]
 confirmed:boolean
   // Add other relevant fields if necessary
+}
+
+export interface IBarberWithServicesObject extends Barber{
+  servicesDetails:IServiceResponse[]
 }
 
 const BarberSchema: Schema = new Schema(
@@ -20,8 +25,8 @@ const BarberSchema: Schema = new Schema(
     clientPhone: { type: String, required: true },
     clientEmail: { type: String, required: true },
     date: { type: Date, required: true },
-    time: { type: String, required: true },
-    services: { type: [Number], required: true },
+    time: { type: [String], required: true },
+    services: { type: [String], required: true },
     confirmed: { type: Boolean, default: false },
   },
   {

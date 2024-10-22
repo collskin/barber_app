@@ -1,7 +1,10 @@
 .prices-container{
-    width: 100vw;
     height: 100vh;
-    background-color: #242526;
+    background-color: hsl(210, 3%, 15%);
+}
+
+.prices-flex{
+    gap: 10px;
 }
 
 @media only screen and (max-width: 600px) {
