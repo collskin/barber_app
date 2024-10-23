@@ -31,7 +31,7 @@ export async function POST(request: any,res:any) {
       // text:`Poštovanje ${client.clientName}, \n\n Vaš termin za ${new Date(client.date).getDate()}. ${months[new Date(client.date).getMonth()]} u ${client.time} je potvrđen. \n\n Frizerski Salon Saša `,
     };
 
-    // await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
     const resp = await BarberModel.create(
       {...requestBody,
       confirmed:c == 'true'
