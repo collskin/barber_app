@@ -29,7 +29,7 @@ const SelectionCard = ({ selectedTime, setSelectedTime, barber, takenTime, servi
 
       const lastIndex = index + servicesTimes - 1
       if (takenTime.some((t: string) => arr.includes(t)) || (!timeSlots[lastIndex])) {
-        toast.warn(`Nema dovoljno slobodnoih termina za sve Vaše odabrane usluge za koje je potrebno (${servicesTimes} termina.`)
+        toast.warn(`Nema dovoljno slobodnih termina za sve Vaše odabrane usluge za koje je potrebno (${servicesTimes} termina.`)
         return
       }
 

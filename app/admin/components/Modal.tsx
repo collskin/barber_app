@@ -1,4 +1,4 @@
-import { formatDate, servicesList } from "@/app/data";
+import { formatDate, generateTimeSlots, servicesList } from "@/app/data";
 import { Input } from "@/components/Input";
 import { Select } from "@/components/Select";
 import { faCheck, faClose, faX } from "@fortawesome/free-solid-svg-icons";
@@ -69,19 +69,58 @@ export const Modal = ({
         })
     };
 
+    console.log(data)
+
     const handleChange = (e: any, name: string) => {
+
         if (name == "barberName") {
             fetchAvailableTimes();
         }
         setData((prev: IAppointmentResponse) => {
             let copy: any = structuredClone(prev);
-            copy[name] = e.target.value;
+            if (name == 'time') {
+
+                const time = e.target.value
+                const timeSlots = generateTimeSlots()
+                const arr: string[] = []
+                const takenTime = timeSlots.filter(t => !availableTimes.includes(t))
+                const servicesTimes = services.filter((s: IServicesCheckbox) => s.checked).reduce((a: number, c: IServicesCheckbox) => a + c.slots, 0)
+                const index = timeSlots.findIndex(t => t == time)
+                for (let i = 0; i < servicesTimes; i++) {
+                    arr.push(timeSlots[index + i])
+                }
+
+                const lastIndex = index + servicesTimes - 1
+                if (takenTime.some((t: string) => arr.includes(t)) || (!timeSlots[lastIndex])) {
+                    toast.warn(`Nema dovoljno slobodnih termina za sve odabrane usluge za koje je potrebno (${servicesTimes} uzastopnih termina.`)
+                    copy[name] = e.target.value;
+                    return copy
+                }
+
+                if (servicesTimes > 1 && arr.includes('13:00') && arr[arr.length - 1] !== '13:00') {
+                    toast.warn(`Trajanje Vaših odabranih usluga bi u odabranim termima (${arr[0]} - ${arr[arr.length - 1]}) ušlo u pauzu salona. Odaberite drugi termin`)
+                    copy[name] = e.target.value;
+                    return copy
+                }
+
+
+                copy[name] = [e.target.value];
+            } else {
+                copy[name] = e.target.value;
+
+            }
             return copy;
         });
     };
 
     const handleSubmit = async () => {
         setLoading(true);
+
+        if (!data.time.length) {
+            toast.error('Vreme nije odabrano')
+            return
+        }
+
         try {
             const obj = {
                 ...data,
@@ -114,6 +153,10 @@ export const Modal = ({
             toast.error("Doslo je do greške.");
         }
     };
+
+    const options = () => {
+        const ts = generateTimeSlots().map(t => ({ label: t, available: availableTimes.includes(t) }))
+    }
 
     return <div className="modal">
         <div className="modal-content">
@@ -210,7 +253,7 @@ export const Modal = ({
 
 interface IModal {
     loading: boolean;
-    availableTimes: any;
+    availableTimes: string[];
     closeModal: any;
     fetchAvailableTimes: any
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
