@@ -30,7 +30,6 @@ export const Modal = ({
         confirmed: false,
         date: formatDate(new Date()),
     });
-
     const [services, setServices] = useState<IServicesCheckbox[]>([]);
 
     useEffect(() => {
@@ -67,9 +66,14 @@ export const Modal = ({
             copy[index].checked = !copy[index].checked
             return copy
         })
+
+        setData(prev => {
+            let copy = structuredClone(prev)
+            copy.time = []
+            return copy
+        })
     };
 
-    console.log(data)
 
     const handleChange = (e: any, name: string) => {
 
@@ -93,18 +97,14 @@ export const Modal = ({
                 const lastIndex = index + servicesTimes - 1
                 if (takenTime.some((t: string) => arr.includes(t)) || (!timeSlots[lastIndex])) {
                     toast.warn(`Nema dovoljno slobodnih termina za sve odabrane usluge za koje je potrebno (${servicesTimes} uzastopnih termina.`)
-                    copy[name] = e.target.value;
                     return copy
-                }
-
-                if (servicesTimes > 1 && arr.includes('13:00') && arr[arr.length - 1] !== '13:00') {
+                } else if (servicesTimes > 1 && arr.includes('13:00') && arr[arr.length - 1] !== '13:00') {
                     toast.warn(`Trajanje Vaših odabranih usluga bi u odabranim termima (${arr[0]} - ${arr[arr.length - 1]}) ušlo u pauzu salona. Odaberite drugi termin`)
-                    copy[name] = e.target.value;
                     return copy
+                } else {
+                    copy[name] = arr
                 }
 
-
-                copy[name] = [e.target.value];
             } else {
                 copy[name] = e.target.value;
 
@@ -117,7 +117,7 @@ export const Modal = ({
         setLoading(true);
 
         if (!data.time.length) {
-            toast.error('Vreme nije odabrano')
+            toast.error('Termin nije odabran ili nije dostupan za odabrane usluge.')
             return
         }
 
@@ -154,9 +154,7 @@ export const Modal = ({
         }
     };
 
-    const options = () => {
-        const ts = generateTimeSlots().map(t => ({ label: t, available: availableTimes.includes(t) }))
-    }
+    console.log(data)
 
     return <div className="modal">
         <div className="modal-content">
@@ -203,15 +201,7 @@ export const Modal = ({
                     options={["Saša", "Danijel"]}
                     value={data.barberName}
                 />
-                {!loading && (
-                    <Select
-                        admin
-                        label="Termin"
-                        onChange={(e: any) => handleChange(e, "time")}
-                        options={availableTimes}
-                        value={data.time[0]}
-                    />
-                )}
+
                 <div className="modal-calendar">
                     <p>Datum</p>
                     <DatePicker format='YYYY/MM/DD' value={[dayjs(new Date(data.date))]} onChange={onChange} needConfirm />
@@ -242,6 +232,16 @@ export const Modal = ({
                         </div>
                     ))}
                 </div>
+                {!loading && services.length && (
+                    <Select
+                        admin
+                        adminDate
+                        label="Termin"
+                        onChange={(e: any) => handleChange(e, "time")}
+                        options={availableTimes}
+                        value={data.time[0]}
+                    />
+                )}
                 <div className="details-confirm" onClick={handleSubmit}>
                     <FontAwesomeIcon icon={faCheck} size="sm" />
                     <p style={{ width: "auto" }}>Potvrdi</p>
