@@ -154,8 +154,6 @@ export const Modal = ({
         }
     };
 
-    console.log(data)
-
     return <div className="modal">
         <div className="modal-content">
             <div className="modal-top">

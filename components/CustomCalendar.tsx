@@ -28,7 +28,9 @@ export const CustomCalendar = ({ onChange }: { onChange: (date: Dayjs) => void }
                     defaultValue={dayjs('2024-11-01')}
                     onChange={onChange}
                     className='calendar'
-                    disabledDate={current => current < dayjs().startOf('year').month(10).date(1)}
+                    disabledDate={current =>
+                        (current < dayjs().startOf('year').month(10).date(1)) || (current.day() == 6 || current.day() == 0)
+                    }
                     fullscreen={false}
                     headerRender={({ value, type, onChange, onTypeChange }) => {
                         const start = 0;
