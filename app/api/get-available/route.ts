@@ -24,8 +24,6 @@ try {
     barberName
   })
 
-  console.log(resp)
-
   const getServices = async (_id: string) => {
     const sResp = await ServiceModel.find({ _id });
     return sResp;

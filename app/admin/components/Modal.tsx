@@ -18,7 +18,7 @@ export const Modal = ({
     setLoading,
     fetchAvailableTimes,
     setAppointments,
-    selectedDate
+    selectedDate,
 }: IModal) => {
     const [data, setData] = useState<IAppointmentResponse>({
         clientName: "",
@@ -28,7 +28,7 @@ export const Modal = ({
         time: [],
         services: [],
         confirmed: false,
-        date: formatDate(new Date()),
+        date: selectedDate ? formatDate(selectedDate) : formatDate(new Date()),
     });
     const [services, setServices] = useState<IServicesCheckbox[]>([]);
 
@@ -78,7 +78,7 @@ export const Modal = ({
     const handleChange = (e: any, name: string) => {
 
         if (name == "barberName") {
-            fetchAvailableTimes();
+            fetchAvailableTimes(data.date, e.target.value);
         }
         setData((prev: IAppointmentResponse) => {
             let copy: any = structuredClone(prev);
@@ -124,7 +124,7 @@ export const Modal = ({
         try {
             const obj = {
                 ...data,
-                services: services.map(s => s._id),
+                services: services.filter(s => s.checked).map(s => s._id),
                 time: data.time || availableTimes[0]
             };
             const resp = await axios.post("api/make_appointment?confirmed=true", {
@@ -139,7 +139,7 @@ export const Modal = ({
                         copy.push({
                             ...obj,
                             confirmed: true,
-                            services,
+                            services: services.filter(s => s.checked),
                             _id: resp.data.message.id,
                         })
                         return copy
@@ -230,7 +230,7 @@ export const Modal = ({
                         </div>
                     ))}
                 </div>
-                {!loading && services.length && (
+                {!loading && services.filter(s => s.checked).length && (
                     <Select
                         admin
                         adminDate

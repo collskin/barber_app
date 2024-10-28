@@ -14,7 +14,7 @@ export default function SelectBarber() {
   };
 
   return (
-    <main className="min-w-full min-h-screen bg-black flex flex-col justify-center items-center barbers-container">
+    <main className="min-w-full min-h-screen flex flex-col justify-center items-center barbers-container">
       <div className="pb-24 text-white text-2xl" style={{ color: 'white' }}>Odaberite frizera: </div>
       <div className="flex justify-between min-w-96 barbers-flex">
         <div className="barber-card" onClick={() => handleSelectBarber('Saša')}>

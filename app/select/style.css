@@ -20,9 +20,9 @@
     top: 70%;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgba(24, 52, 112, 0.598);
+    background-color: #d19f68;
     padding: 5px 15px;
-    border-radius: 50px;
+    border-radius: 2px;
     font-size: 1.3rem;
     width: max-content;
 }

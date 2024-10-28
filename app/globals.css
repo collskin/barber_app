@@ -22,6 +22,20 @@
 }
 
 
+
+.button{
+  width: 200px;
+  height: 50px;
+  color: #101010;
+  text-transform: capitalize;
+  background-color: #d19f68;
+  cursor: pointer;
+}
+
+.web-checkbox{
+  accent-color: #d19f68;
+}
+
 *{
   scroll-behavior: smooth;
 }

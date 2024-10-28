@@ -122,15 +122,15 @@ const ServicesPage = () => {
 
   return (
 
-    <div className="min-w-full min-h-screen bg-black p-8 flex justify-center items-center flex-col services-container">
+    <div className="min-w-full min-h-screen  p-8 flex justify-center items-center flex-col services-container">
       <ClipLoader
         loading={loading}
-        color={"#5d5ce5"}
+        color={'#1c2434'}
         cssOverride={{
           position: "fixed",
           top: "50%",
           left: "50%",
-          transform: "translate(-50%, -50%)",
+          transform: "translate(-50% -50%)",
           opacity: 1,
         }}
         size={150}
@@ -153,7 +153,7 @@ const ServicesPage = () => {
                 name={service.name}
                 checked={service.checked}
                 onChange={() => handleCheckboxChange(service._id)}
-                className="mr-4"
+                className="mr-4 web-checkbox"
               />
               <label htmlFor={service.name} className="flex-1 text-lg" style={{ color: 'white' }}>
                 {service.name} - {service.price}
@@ -173,7 +173,7 @@ const ServicesPage = () => {
         </div>
       </div>
       <button
-        className="min-w-56 min-h-10 bg-secondary-grey-bg rounded-md mt-4"
+        className="button"
         onClick={handleSubmit}
       >
         Pošalji

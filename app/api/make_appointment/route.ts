@@ -28,7 +28,6 @@ export async function POST(request: any,res:any) {
       to:'sasafrizer78@gmail.com',
       subject:'Novi zahtev',
       html:ownerHtml({time:requestBody.time[0], date:requestBody.date, barberName:requestBody.barberName, clientEmail:requestBody.clientEmail, clientPhone:requestBody.clientPhone, clientName:requestBody.clientName}),
-      // text:`Poštovanje ${client.clientName}, \n\n Vaš termin za ${new Date(client.date).getDate()}. ${months[new Date(client.date).getMonth()]} u ${client.time} je potvrđen. \n\n Frizerski Salon Saša `,
     };
 
     await transporter.sendMail(mailOptions);

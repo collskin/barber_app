@@ -10,7 +10,7 @@ import { GoogleMap, Marker } from "@react-google-maps/api";
 //Map's styling
 export const defaultMapContainerStyle = {
     width: '100%',
-    height: '80vh',
+    height: '400px',
     borderRadius: '15px 0px 0px 15px',
 };
 const defaultMapCenter = {
@@ -29,9 +29,8 @@ const defaultMapOptions = {
 };
 const MapComponent = () => {
     return (
-        <div className="w-full">
+        <div>
             <GoogleMap
-
                 mapContainerStyle={defaultMapContainerStyle}
                 center={defaultMapCenter}
                 zoom={defaultMapZoom}

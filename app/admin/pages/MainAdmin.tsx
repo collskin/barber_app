@@ -56,14 +56,13 @@ export const MainAdmin = ({
 
     const times = generateTimeSlots();
 
-    const fetchAvailableTimes = async (dt?: Date) => {
+    const fetchAvailableTimes = async (dt?: Date, barberName?: string) => {
         try {
             setLoading(true);
             const resp = await axios.get(
                 "/api/get-all?date=" +
                 (dt ?? formatDate(date)) +
-                "&barberName=" +
-                (data.barberName == "Saša" ? "Saša" : "Danijel")
+                "&barberName=" + (barberName ?? (data.barberName == "Saša" ? "Saša" : "Danijel"))
             );
             const avTim = times.filter(
                 (t: any) => !resp.data.some((d: any) => d.time == t)
@@ -105,7 +104,6 @@ export const MainAdmin = ({
     }, []);
 
     useEffect(() => {
-
 
         const fetchData = async (noLoading?: boolean, length?: number) => {
             try {

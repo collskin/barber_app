@@ -1,7 +1,8 @@
 'use client'
 
 import {
-  faClock,
+  faCalendar,
+  faCalendarAlt,
   faMoneyBill,
   faShoppingBag,
   faUser,
@@ -72,7 +73,7 @@ const SelectionCard = ({ selectedTime, setSelectedTime, barber, takenTime, servi
           {services?.filter((s: IServicesCheckbox) => s.checked).reduce((acc: number, s: IServicesCheckbox) => acc + (s.price as number), 0)} RSD -
           <span>  </span>
           <FontAwesomeIcon
-            icon={faClock}
+            icon={faCalendarAlt}
             size="sm"
             className="align-middle"
             style={{ marginBottom: 1 }}

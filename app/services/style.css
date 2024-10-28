@@ -9,6 +9,11 @@
 }
 
 
+.barbers-container{
+
+    background-color: #d19f68;
+
+}
 
 .services-info{
     display: flex;
@@ -38,6 +43,7 @@
 
     .services-container{
         padding: 15px;
+        background-color: #121212;;
     }
 
     .services-title{
