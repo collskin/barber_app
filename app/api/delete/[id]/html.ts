@@ -102,7 +102,7 @@ export const rejectHTML = (text?:string) => {
     <!-- Main Content Section -->
     <div class="content">
       <h2>Pozdrav,</h2>
-      <p>${text ?? 'Termin koji ste zahtevali je obijen, zakažite ponovo u nekim drugim teminima.'}</p>
+      <p>${text ?? 'Termin koji Ste zahtevali je odbijen, zakažite ponovo u nekim drugim teminima.'}</p>
       
       <!-- Call to Action -->
       <p>U koliko imate nekih pitanja, pozovite nas na +381 64 11 52 273</p>
@@ -110,7 +110,7 @@ export const rejectHTML = (text?:string) => {
 
     <!-- Footer Section -->
     <div class="footer">
-      <p>Saša barber</p>
+      <p>Saša Barber</p>
     </div>
   </div>
 </body>

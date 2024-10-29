@@ -9,12 +9,6 @@
 }
 
 
-.barbers-container{
-
-    background-color: #d19f68;
-
-}
-
 .services-info{
     display: flex;
     flex-direction: column;

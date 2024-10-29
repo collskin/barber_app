@@ -12,9 +12,9 @@ export default function Home() {
     return <>
         <Header />
         <main id='main' >
-            <AnimatedDiv className='main-button' >
+            <AnimatedDiv className='main-button' layout >
                 <h1>SAŠA BARBER</h1>
-                <h4>Frizerski salon u Kruševcu sa dugom  tradicijom <br />i bogatim iskustvom</h4>
+                <h4>Frizerski salon u Kruševcu sa dugom tradicijom i bogatim iskustvom</h4>
                 <Link href='select' ><button>ZAKAŽI</button></Link>
             </AnimatedDiv>
             <AnimatedDivImg className='main-img' >
@@ -41,9 +41,9 @@ export default function Home() {
                             height={70}
                             width={70}
                         />
-                        <h3>Sasa Barber</h3>
+                        <h3>Saša Barber</h3>
                     </AnimatedDiv>
-                    <p>Frizerski salon u Kruševcu sa dugom  tradicijom <br /> i bogatim iskustvom</p>
+                    <p>Frizerski salon u Kruševcu sa dugom tradicijom i bogatim iskustvom</p>
                 </AnimatedDiv>
                 <div>
                     <p className='tel' >Kontakt: <span className='orange' ></span></p>

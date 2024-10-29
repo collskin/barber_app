@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import barber_one from "../../assets/barber_one.jpg";
-import barber_two from "../../assets/barber_two.jpg";
+import barber_one from "../../assets/barber_one.webp";
+import barber_two from "../../assets/barber_two.webp";
 import { useRouter } from "next/navigation";
 import './style.css'
 

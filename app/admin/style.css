@@ -197,6 +197,7 @@
 }
 
 .admin-details{
+    pointer-events: none;
     height: 100vh;
     position: fixed;
     right: 0;
@@ -215,6 +216,7 @@
 }
 
 .details-open{
+    pointer-events: all;
     opacity: 1;
     min-width: 300px;
 }
@@ -676,7 +678,7 @@ input[type="checkbox"] {
     }
  
     .details-open{
-
+        pointer-events: all;
         min-width: 100%;
         width: 100%;
     }
