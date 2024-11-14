@@ -35,6 +35,7 @@ export async function DELETE(request: NextRequest,{params}:{params:{id:string}})
       { status: 200 }
     );
   } catch (error) {
+    console.log(error)
     return NextResponse.json(
       { message: "Doslo je do greske" },
       { status: 500 }

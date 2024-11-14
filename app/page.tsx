@@ -41,7 +41,7 @@ export default function Home() {
                             height={70}
                             width={70}
                         />
-                        <h3>Saša Barber</h3>
+                        <h3 style={{ color: 'white' }} >Saša Barber</h3>
                     </AnimatedDiv>
                     <p>Frizerski salon u Kruševcu sa dugom tradicijom i bogatim iskustvom</p>
                 </AnimatedDiv>

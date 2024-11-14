@@ -10,7 +10,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import TimeCard from "./TimeCard";
-import { generateTimeSlots, months } from "@/app/data";
+import { addZero, generateTimeSlots, months } from "@/app/data";
 import { IServicesCheckbox } from "@/app/services/page";
 import { toast } from "react-toastify";
 
@@ -43,6 +43,18 @@ const SelectionCard = ({ selectedTime, setSelectedTime, barber, takenTime, servi
       console.log(error)
     }
 
+  }
+
+
+
+  const currentTime = () => {
+    const hours = new Date().getHours()
+    const mins = new Date().getMinutes()
+    return Number(addZero(hours) + '' + addZero(mins))
+  }
+
+  const isToday = () => {
+    return date.getDate() == new Date().getDate() && date.getMonth() == new Date().getMonth() && date.getFullYear() == new Date().getFullYear()
   }
 
   return (
@@ -98,7 +110,7 @@ const SelectionCard = ({ selectedTime, setSelectedTime, barber, takenTime, servi
       <div className="w-full border-b-2 border-gray-300 my-2"></div>
       <div className="flex flex-wrap overflow-y-auto max-h-40">
         {timeSlots.length == takenTime.length ? <p>Nema slobodnih termina za odabrani datum.</p> : timeSlots.map((time, index) => (
-          <TimeCard taken={takenTime?.some((t: string) => t == time)} onClick={() => handleClick(time)} active={selectedTime?.includes(time)} key={index} time={time} />
+          <TimeCard taken={takenTime?.some((t: string) => t == time) || (isToday() && (currentTime() > Number(time.split(':').join(''))))} onClick={() => handleClick(time)} active={selectedTime?.includes(time)} key={index} time={time} />
         ))}
       </div>
     </div>

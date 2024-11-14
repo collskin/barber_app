@@ -1,5 +1,5 @@
 import { formatDate } from "@/app/data";
-import { dbConnect, disconnect } from "@/app/lib/db";
+import { dbConnect } from "@/app/lib/db";
 import BarberModel from "@/app/models/Barber";
 import ServiceModel from "@/app/models/Service";
 import { NextRequest, NextResponse } from "next/server";

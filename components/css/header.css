@@ -20,6 +20,7 @@ nav{
 
 nav a{
     transition: .2s ease-in;
+    color: white;
 }
 
 nav a:hover{

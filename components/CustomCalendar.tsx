@@ -29,7 +29,9 @@ export const CustomCalendar = ({ onChange }: { onChange: (date: Dayjs) => void }
                     onChange={onChange}
                     className='calendar'
                     disabledDate={current =>
-                        (current < dayjs().startOf('year').month(10).date(1)) || (current.day() == 6 || current.day() == 0)
+                        (current < dayjs().startOf('year').month(10).date(1)) ||
+                        (current.day() === 6 || current.day() === 0) ||
+                        (current < dayjs().startOf('day')) // This condition checks if current is before today
                     }
                     fullscreen={false}
                     headerRender={({ value, type, onChange, onTypeChange }) => {

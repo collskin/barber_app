@@ -33,7 +33,6 @@ export const MainAdmin = ({
 }: IMainAdmin) => {
     const [modal, setModal] = useState(false);
     const [availableTimes, setAvailableTimes] = useState<string[]>([]);
-    const audioRef = useRef(null);
 
     const onChange: DatePickerProps<Dayjs[]>["onChange"] = (date, dateString) => {
         setDate(new Date(dateString as string));
@@ -141,6 +140,7 @@ export const MainAdmin = ({
         setModal(true)
         fetchAvailableTimes()
     }
+
 
     return (
         <div className="admin-main">
