@@ -62,6 +62,14 @@ export const Modal = ({
     const handleCheckboxChange = (serviceId: string) => {
         setServices(prev => {
             const copy = structuredClone(prev)
+            return copy.map(s => {
+                if (s._id == serviceId) {
+                    s.checked = !s.checked
+                } else {
+                    s.checked = false
+                }
+                return s
+            })
             const index = copy.findIndex(s => s._id == serviceId)
             copy[index].checked = !copy[index].checked
             return copy
@@ -78,7 +86,7 @@ export const Modal = ({
     const handleChange = (e: any, name: string) => {
 
         if (name == "barberName") {
-            fetchAvailableTimes(data.date, e.target.value);
+            fetchAvailableTimes(data.date, e.target.value == 'Danijel' ? 'danijel' : e.target.value);
         }
         setData((prev: IAppointmentResponse) => {
             let copy: any = structuredClone(prev);
@@ -176,22 +184,22 @@ export const Modal = ({
                     type="text"
                     placeholder="Unesite ime"
                 />
-                <Input
+                {/* <Input
                     admin
                     label="Telefon "
                     onChange={(e: any) => handleChange(e, "clientPhone")}
                     value={data.clientPhone}
                     type="tel"
                     placeholder="Unesite telefon"
-                />
-                <Input
+                /> */}
+                {/* <Input
                     admin
                     label="E-mail "
                     onChange={(e: any) => handleChange(e, "clientEmail")}
                     value={data.clientEmail}
                     type="mail"
                     placeholder="Unesite e-mail"
-                />
+                /> */}
                 <Select
                     admin
                     label="Frizer"

@@ -28,7 +28,11 @@ export async function DELETE(request: NextRequest,{params}:{params:{id:string}})
       html:rejectHTML(),
     };
 
+    try {
     await transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.log('Nema mejla za odabranog korisnika.')
+    }
 
     return NextResponse.json(
       { message: "Termin uspesno obrisan" },

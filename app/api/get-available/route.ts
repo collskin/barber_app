@@ -41,8 +41,6 @@ try {
     })
   );
 
-  console.log(resp)
-
   const ar = getTakenTimes(resp as IBarberWithServicesObject[] )
 
   return new NextResponse(JSON.stringify(ar))

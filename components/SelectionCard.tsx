@@ -46,7 +46,6 @@ const SelectionCard = ({ selectedTime, setSelectedTime, barber, takenTime, servi
   }
 
 
-
   const currentTime = () => {
     const hours = new Date().getHours()
     const mins = new Date().getMinutes()

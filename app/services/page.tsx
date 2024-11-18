@@ -114,6 +114,14 @@ const ServicesPage = () => {
     setSelectedTime([])
     setServices(prev => {
       const copy = structuredClone(prev)
+      return copy.map(s => {
+        if (s._id == serviceId) {
+          s.checked = !s.checked
+        } else {
+          s.checked = false
+        }
+        return s
+      })
       const index = copy.findIndex(s => s._id == serviceId)
       copy[index].checked = !copy[index].checked
       return copy

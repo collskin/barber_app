@@ -30,10 +30,16 @@ export async function POST(request: any,res:any) {
       html:ownerHtml({time:requestBody.time[0], date:requestBody.date, barberName:requestBody.barberName, clientEmail:requestBody.clientEmail, clientPhone:requestBody.clientPhone, clientName:requestBody.clientName}),
     };
 
-    await transporter.sendMail(mailOptions);
+    requestBody.clientEmail = requestBody.clientEmail || '/'
+    requestBody.clientPhone = requestBody.clientPhone || '/'
+
+
+    if(!(c == 'true')){
+      await transporter.sendMail(mailOptions);
+    }
     const resp = await BarberModel.create(
       {...requestBody,
-      confirmed:c == 'true'
+      confirmed:c == 'true',
       }
     )
   
