@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { IAppointmentResponse } from "./admin/types";
 import { Barber, IBarberWithServicesObject } from "./models/Barber";
 
@@ -156,3 +157,32 @@ export const isBeforeNov = (date?:Date) =>{
   return false
 
 }
+
+export function getNextWorkdayDate() {
+  const today = new Date();
+  let day = today.getDay(); // 0 = Sunday, 6 = Saturday
+
+  // If today is Saturday (6), add 2 days to reach Monday (1).
+  // If today is Sunday (0), add 1 day to reach Monday (1).
+  if (day === 6) {
+      today.setDate(today.getDate() + 2);
+  } else if (day === 0) {
+      today.setDate(today.getDate() + 1);
+  }
+
+  return today;
+}
+
+export const getFirstWorkdayOfMonth = () => {
+  const firstDayOfMonth = dayjs().startOf('month');
+  const dayOfWeek = firstDayOfMonth.day();
+
+  // If the first day is Saturday (6), add 2 days to make it Monday
+  // If the first day is Sunday (0), add 1 day to make it Monday
+  if (dayOfWeek === 6) {
+      return firstDayOfMonth.add(2, 'day');
+  } else if (dayOfWeek === 0) {
+      return firstDayOfMonth.add(1, 'day');
+  }
+  return firstDayOfMonth;
+};

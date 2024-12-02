@@ -7,6 +7,7 @@ import type { CalendarProps } from 'antd';
 import type { Dayjs } from 'dayjs';
 import dayLocaleData from 'dayjs/plugin/localeData';
 import enGB from 'antd/es/locale/en_GB';
+import { getFirstWorkdayOfMonth } from '@/app/data';
 
 
 dayjs.extend(dayLocaleData);
@@ -25,7 +26,7 @@ export const CustomCalendar = ({ onChange }: { onChange: (date: Dayjs) => void }
         <div >
             <ConfigProvider locale={enGB} >
                 <Calendar
-                    defaultValue={dayjs('2024-11-01')}
+                    defaultValue={getFirstWorkdayOfMonth()}
                     onChange={onChange}
                     className='calendar'
                     disabledDate={current =>

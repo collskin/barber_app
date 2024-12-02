@@ -12,7 +12,7 @@ import { ClipLoader } from "react-spinners";
 import SelectionCard from "@/components/SelectionCard";
 import { CustomCalendar } from "@/components/CustomCalendar";
 import { Dayjs } from "dayjs";
-import { formatDate, isBeforeNov } from "../data";
+import { formatDate, getNextWorkdayDate, isBeforeNov } from "../data";
 
 const ServicesPage = () => {
   const searchParams = useSearchParams();
@@ -23,7 +23,7 @@ const ServicesPage = () => {
   const [loading, setLoading] = useState(false)
   const router = useRouter();
 
-  const [selectedDate, setSelectedDate] = useState<Date>(isBeforeNov() ? new Date(2024, 10, 1) : new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(getNextWorkdayDate());
   const [selectedTime, setSelectedTime] = useState<string[]>()
   const [takenTime, setTakenTime] = useState<string[]>([])
   const barberName = searchParams.get('barber')
