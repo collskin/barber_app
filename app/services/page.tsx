@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
@@ -146,7 +147,7 @@ const ServicesPage = () => {
         data-testid="loader"
       />
       <ToastContainer />
-      <h1 className="text-3xl font-bold mb-4 services-title " style={{ color: 'white' }}>Ostavite podatke i odaberite usluge</h1>
+      <h1 className="text-3xl font-bold mb-4 services-title " style={{ color: 'white' }}>Ostavite podatke i odaberite uslugu</h1>
       <p style={{ color: 'white', textAlign: 'center' }} >Za dodatne termine pozvati na broj: +381 64 11 52 273</p>
       <div className="services-wrapper" >
         <div className="services-info" >

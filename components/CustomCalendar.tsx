@@ -100,7 +100,7 @@ export const CustomCalendar = ({ onChange }: { onChange: (date: Dayjs) => void }
                                             popupMatchSelectWidth={false}
                                             value={month}
                                             onChange={(newMonth) => {
-                                                const now = value.clone().month(newMonth);
+                                                const now = value.clone().month(newMonth).date(new Date().getDate());
                                                 onChange(now);
                                             }}
                                         >

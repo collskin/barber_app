@@ -108,7 +108,7 @@ const SelectionCard = ({ selectedTime, setSelectedTime, barber, takenTime, servi
 
       <div className="w-full border-b-2 border-gray-300 my-2"></div>
       <div className="flex flex-wrap overflow-y-auto max-h-40">
-        {timeSlots.length == takenTime.length ? <p>Nema slobodnih termina za odabrani datum.</p> : timeSlots.map((time, index) => (
+        {timeSlots.length == takenTime.length ? <p style={{ width: '100%', textAlign: 'center' }} >Nema slobodnih termina za odabrani datum.</p> : timeSlots.map((time, index) => (
           <TimeCard taken={takenTime?.some((t: string) => t == time) || (isToday() && (currentTime() > Number(time.split(':').join(''))))} onClick={() => handleClick(time)} active={selectedTime?.includes(time)} key={index} time={time} />
         ))}
       </div>
