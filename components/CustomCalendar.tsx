@@ -29,11 +29,12 @@ export const CustomCalendar = ({ onChange }: { onChange: (date: Dayjs) => void }
                     defaultValue={getFirstWorkdayOfMonth()}
                     onChange={onChange}
                     className='calendar'
-                    disabledDate={current =>
-                        (current < dayjs().startOf('year').month(10).date(1)) ||
-                        (current.day() === 6 || current.day() === 0) ||
-                        (current < dayjs().startOf('day')) // This condition checks if current is before today
-                    }
+                    disabledDate={(current) =>
+                        !current || // Handle null or undefined values
+                        current.isBefore(dayjs(), 'day') || // Disable all past dates
+                        current.day() === 6 || // Disable Saturdays
+                        current.day() === 0 // Disable Sundays
+                    }                                     
                     fullscreen={false}
                     headerRender={({ value, type, onChange, onTypeChange }) => {
                         const start = 0;
